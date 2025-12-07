@@ -1,0 +1,54 @@
+<div class="ticket-container">
+  <h1>Ticket Management System</h1>
+
+  <div class="tickets-section">
+    <h2>All Tickets</h2>
+    <div class="tickets-list">
+      @if (tickets().length > 0) {
+        <table>
+          <thead>
+            <tr>
+              <th>ID</th>
+              <th>Title</th>
+              <th>Description</th>
+              <th>Status</th>
+              <th>Action</th>
+            </tr>
+          </thead>
+          <tbody>
+            @for (ticket of tickets(); track ticket.id) {
+              <tr>
+                <td>{{ ticket.id }}</td>
+                <td>{{ ticket.shortDescription }}</td>
+                <td>{{ ticket.description }}</td>
+                <td>{{ ticket.status }}</td>
+                <td>
+                  <button (click)="getTicketDetails(ticket.id)">View Details</button>
+                </td>
+              </tr>
+            }
+          </tbody>
+        </table>
+      } @else {
+        <p>No tickets available</p>
+      }
+    </div>
+  </div>
+
+  <div class="ticket-details-section">
+    <h2>Ticket Details</h2>
+    @if (selectedTicket()) {
+      <div class="details-card">
+        <p><strong>ID:</strong> {{ selectedTicket().id }}</p>
+        <p><strong>Title:</strong> {{ selectedTicket().shortDescription }}</p>
+        <p><strong>Description:</strong> {{ selectedTicket().description }}</p>
+        <p><strong>Severity:</strong> {{ selectedTicket().severity }}</p>
+        <p><strong>Status:</strong> {{ selectedTicket().status }}</p>
+        <p><strong>Created:</strong> {{ selectedTicket().createdDate | date: 'mediumDate' }}</p>
+        <p><strong>Target Date:</strong> {{ selectedTicket().targetDate | date: 'mediumDate' }}</p>
+      </div>
+    } @else {
+      <p>Select a ticket to view details</p>
+    }
+  </div>
+</div>
